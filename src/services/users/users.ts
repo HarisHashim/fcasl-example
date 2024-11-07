@@ -3,6 +3,8 @@ import { authenticate } from '@feathersjs/authentication'
 
 import { hooks as schemaHooks } from '@feathersjs/schema'
 
+import { alterItems } from "feathers-hooks-common";
+
 import {
   userDataValidator,
   userPatchValidator,
@@ -23,6 +25,16 @@ const authorizeHook = authorize({ adapter: '@feathersjs/knex' })
 
 export * from './users.class'
 export * from './users.schema'
+
+const populateRole = () => {
+  return alterItems(async (user, context) => {
+    if (!user.roleId) {
+      return;
+    }
+    user.role = await context.app.service('roles' /* YOUR ROLES SERVICEPATH */).get(user.roleId);
+    return user;
+  });
+}
 
 // A configure function that registers the service and its hooks via `app.configure`
 export const user = (app: Application) => {
@@ -57,7 +69,7 @@ export const user = (app: Application) => {
       remove: []
     },
     after: {
-      all: [],
+      all: [populateRole()],
       find: [],
       get: [],
       create: [

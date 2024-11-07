@@ -7,7 +7,9 @@
   "keywords": [
     "feathers"
   ],
-  "author": {"name": "Haris"},
+  "author": {
+    "name": "Haris"
+  },
   "contributors": [],
   "bugs": {},
   "engines": {
@@ -64,6 +66,7 @@
     "@feathersjs/typebox": "^5.0.30",
     "compression": "^1.7.5",
     "feathers-casl": "^2.1.2",
+    "feathers-hooks-common": "^8.2.1",
     "knex": "^3.1.0",
     "mysql": "^2.18.1",
     "winston": "^3.16.0"
